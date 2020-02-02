@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+  <head>
+      <style>
+
+      @viewport{
+      width: device-width;
+      zoom:1.0;
+      }
+
+@media screen and (max-width:320px) {
+.bdy{
+  zoom:0.7;
+  }
+
+  .rghtpane{
+  zoom:0.7;
+  padding-top:70px;
+
+  }
+}
+      #sidebar {
+    overflow: hidden;
+    z-index: 3;
+    position:fixed;
+}
+
+
+#sidebar .list-group {
+    min-width: 400px;
+    background-color: #333;
+    min-height: 100vh;
+}
+#sidebar i {
+    margin-right: 6px;
+}
+
+#sidebar .list-group-item {
+    border-radius: 0;
+    background-color: #333;
+    color: #ccc;
+    border-left: 0;
+    border-right: 0;
+    border-color: #2c2c2c;
+    white-space: nowrap;
+}
+
+/* highlight active menu */
+#sidebar .list-group-item:not(.collapsed) {
+    background-color: #222;
+}
+
+/* closed state */
+#sidebar .list-group .list-group-item[aria-expanded="false"]::after {
+  content: " \f0d7";
+  font-family: FontAwesome;
+  display: inline;
+  text-align: right;
+  padding-left: 5px;
+}
+
+/* open state */
+#sidebar .list-group .list-group-item[aria-expanded="true"] {
+  background-color: #222;
+}
+#sidebar .list-group .list-group-item[aria-expanded="true"]::after {
+  content: " \f0da";
+  font-family: FontAwesome;
+  display: inline;
+  text-align: right;
+  padding-left: 5px;
+}
+
+/* level 1*/
+#sidebar .list-group .collapse .list-group-item,
+#sidebar .list-group .collapsing .list-group-item  {
+  padding-left: 20px;
+}
+
+/* level 2*/
+#sidebar .list-group .collapse > .collapse .list-group-item,
+#sidebar .list-group .collapse > .collapsing .list-group-item {
+  padding-left: 30px;
+}
+
+/* level 3*/
+#sidebar .list-group .collapse > .collapse > .collapse .list-group-item {
+  padding-left: 40px;
+}
+
+@media (max-width:768px) {
+    #sidebar {
+        min-width: 35px;
+        max-width: 40px;
+        overflow-y: auto;
+        overflow-x: visible;
+        transition: all 0.25s ease;
+        transform: translateX(-45px);
+        position: fixed;
+    }
+
+    #sidebar.show {
+        transform: translateX(0);
+    }
+
+    #sidebar::-webkit-scrollbar{ width: 0px; }
+
+    #sidebar, #sidebar .list-group {
+        min-width: 35px;
+        overflow: visible;
+    }
+    /* overlay sub levels on small screens */
+    #sidebar .list-group .collapse.show, #sidebar .list-group .collapsing {
+        position: relative;
+        z-index: 1;
+        width: 190px;
+        top: 0;
+    }
+    #sidebar .list-group > .list-group-item {
+        text-align: center;
+        padding: .75rem .5rem;
+    }
+    /* hide caret icons of top level when collapsed */
+    #sidebar .list-group > .list-group-item[aria-expanded="true"]::after,
+    #sidebar .list-group > .list-group-item[aria-expanded="false"]::after {
+        display:none;
+    }
+}
+
+.collapse.show {
+  visibility: visible;
+}
+.collapsing {
+  visibility: visible;
+  height: 0;
+  -webkit-transition-property: height, visibility;
+  transition-property: height, visibility;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.collapsing.width {
+  -webkit-transition-property: width, visibility;
+  transition-property: width, visibility;
+  width: 0;
+  height: 100%;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+
+
+
+
+.bdy{
+padding-left:15%;
+padding-right:15%;
+position:relative;
+height:100%;
+}
+
+
+
+
+      </style>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1 ">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>     {% block title %}{% endblock %}</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+        <a style="color:white;" href="#" data-target="#sidebar" data-toggle="collapse" aria-expanded="true"><i class="fa fa-navicon fa-2x py-2 p-1"></i></a>
+         <div class="navbar-brand"> Responsive site</div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+ <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+    <ul class="navbar-nav">
+        <li>
+            <form method="get" action="#">
+                <button style="background-color:transparent; border:0;" class="nav-link">Responsive Image</button>
+            </form>
+        </li>
+
+         <li>
+            <form method="get" action="#">
+                <button style="background-color:transparent; border:0;" class="nav-link">Responsive Card</button>
+            </form>
+        </li>
+    </ul>
+ </div>
+</nav>
+
+
+
+
+<div class="container-fluid">
+    <div class="row d-flex d-md-block flex-nowrap  wrapper">
+        <div class="col-md-3 collapse show float-left col-1 pl-0 pr-0 " style="max-width:20%" id="sidebar">
+                <div class="list-group border-0 card text-center text-md-left">
+                <form method="get" action="/task3/res_text">
+                    <button type="submit" class="list-group-item d-inline-block collapsed" data-parent="#sidebar"><i class="fa fa-desktop"></i><span class="d-none d-md-inline">Responsive Text</span> </button>
+                    </form>
+
+                <form method="get" action="/task3/res_table">
+                    <button type="submit" class="list-group-item d-inline-block collapsed" data-parent="#sidebar"><i class="fa fa-table"></i> <span class="d-none d-md-inline">Responsive Table</span> </button>
+                    </form>
+                <form method="get" action="/task3/res_image">
+                    <button type="submit" class="list-group-item d-inline-block collapsed" data-parent="#sidebar"><i class="fa fa-picture-o"></i> <span class="d-none d-md-inline">Responsive Image</span> </button>
+                    </form>
+                 <form method="get" action="/task3/res_card">
+                    <button type="submit" class="list-group-item d-inline-block collapsed" data-parent="#sidebar"><i class="fa fa-credit-card"></i> <span class="d-none d-md-inline">Responsive Card</span> </button>
+                    </form>
+            </div>
+        </div>
+    </div>
+        <main class="col-md-9 col px-5 pl-md-2 pt-2 main mx-auto">
+             <div class="bdy">
+
+
+            {% block body %}{% endblock %}
+            <div class="rghtpane" style="overflow:auto; border-color:red; top:70px; left:75%; position:absolute; position:fixed; max-height:640px; width:25%;" >{% block right_pane %}{% endblock %} </div>
+             </div>
+            </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+  </body>
+
+</html>
